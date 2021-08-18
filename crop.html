@@ -1,0 +1,31 @@
+<html>
+<head>
+    <script src="main.js"></script>
+    <script src="fileReader.js"></script>
+</head>
+<body>
+<button id="upload">Upload</button>
+<canvas id='cvs' width='500' height='600'></canvas><br>
+<button id="btn-crop">CROP</button><br>
+<button id="btn-change">Cutting method</button><br>
+
+
+<script>
+    document.getElementById('upload').onclick = function() {
+        readImageFromDevice().then(res => {
+            const a = new CroppingCanvas('cvs', 'r', { ow: 200, oh: 200 })
+            a.loadImage(res.path)
+            document.getElementById('btn-crop').onclick = function() {
+                const cropped = a.cropImage()
+                document.body.appendChild(cropped.canvas);
+                alert(cropped.path)
+            }
+
+            document.getElementById('btn-change').onclick = function() {
+                a.changeCuttingMethod('c', 0, 0, 100)
+            }
+        })
+    }
+</script>
+</body>
+</html>
